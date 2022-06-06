@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Data visualization final program</title>
+   
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css?v=<?=time()?20220605" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Topbar Start -->
+    <div class="topbar">
+        <img src="logo.png">
+    </div>
+    <!-- Topbar End -->
+
+
+    <!-- list Start -->
+    <div class="list">
+        <div class="page headerTab" id="headerTab">
+            <a href="intro.html">introduction</a>
+            <a href="index1.html">analysis</a> 
+            <!-- <i class="tabLine"></i> -->
+        </div>
+    </div>
+    
+    <!-- list End -->
+    <!-- chart start -->
+        <div class="banner" style="margin-top: 10px;">
+            <h1>Trading NFTs? Welcome home</h1>
+        </div>
+        <div class="banner">
+                <span id="type-text">...</span>
+                <span class="blinking-cursor">_</span>           
+
+        </div>
+        
+        
+   
+    
+    <!-- chart end -->
+</body>
+<script type="text/javascript" src="jquery-1.6.2.min.js"></script>
+<script>
+    var headerTabArray = $("#headerTab a"),headTabLine = $("#headerTab .tabLine"),tabIndex,headerTabArrayLength = headerTabArray.length,headerTabWidthArray = [],headerTabPositonArray = [],defaultNum = 0;
+    for(var i=0;i<headerTabArrayLength;i  ){
+        headerTabWidthArray[i] = headerTabArray.eq(i).width()   10;
+        headerTabPositonArray[i] = headerTabArray.eq(i).position().left   10;  
+    }
+    headerTabArray.mouseover(function(){
+        $("#headerTab i:animated").stop();
+        tabIndex = $(this).index();
+        headTabLine.animate({width:headerTabWidthArray[tabIndex],left:headerTabPositonArray[tabIndex]},300);
+    })
+    headerTabArray.mouseout(function(){
+        $("#headerTab i:animated").stop();
+        tabIndex = $(this).index();
+        headTabLine.animate({width:headerTabWidthArray[defaultNum],left:headerTabPositonArray[defaultNum]},300);
+    })
+    defaultNum = 0;
+    headTabLine.animate({width:headerTabWidthArray[defaultNum],left:headerTabPositonArray[defaultNum]},300);
+</script>
+<script type="text/javascript">
+    function init () {
+  function typeLoop() { 
+    textUtils.typeText(' Discover')
+      .then(() => utils.wait(2000))
+      .then(() => textUtils.removeText(9))
+      .then(() => textUtils.typeText(' Analyze'))
+      .then(() => utils.wait(2000))
+      .then(() => textUtils.removeText(8))
+      .then(typeLoop)
+  }
+  utils.wait(2000).then(() => {
+    textUtils.clearText()
+    textUtils.typeText('The Best NFT On The Market To').then(typeLoop)
+  })
+}
+
+const textNode = document.getElementById('type-text')
+let text = ''
+
+const utils = {
+  genRandomInterval: () => {
+    const randomMsInterval = 100 * Math.random()
+    const msInterval = randomMsInterval < 50 ? 10 : randomMsInterval
+    return msInterval
+  },
+  wait: (time) => {
+    return new Promise(resolve => {
+      setTimeout(resolve, time)
+    })
+  }
+}
+
+const characterUtils = {
+  pushCharacter: (character) => {
+    text += character
+    textUtils.updateText()
+  },
+  popCharacter: () => {
+    text = text.slice(0, text.length -1)
+    textUtils.updateText()
+  },
+  typeCharacter: (character) => {
+    return new Promise(resolve => {
+      const msInterval = utils.genRandomInterval()
+      characterUtils.pushCharacter(character)
+      utils.wait(msInterval).then(resolve)
+    })
+  },
+  removeCharacter: () => {
+    return new Promise(resolve => {
+      const msInterval = utils.genRandomInterval()
+      characterUtils.popCharacter()
+      utils.wait(msInterval).then(resolve)
+    })
+  }
+}
+
+const textUtils = {
+  updateText: () => {
+    textNode.innerText = text
+  },
+  clearText: () => {
+    text = ''
+    textUtils.updateText()
+  },
+  typeText: (text) => {
+    return new Promise(resolve => {
+      (function _type (index) {
+        characterUtils.typeCharacter(text[index]).then(() => {
+          if (index + 1 < text.length) {
+            _type(index + 1)
+          } else {
+            resolve()
+          }
+        })
+      })(0)
+    })
+  },
+  removeText: (amount) => {
+    return new Promise(resolve => {
+      (function _remove (index) {
+        characterUtils.removeCharacter().then(() => {
+          if (index + 1 < amount) {
+            _remove(index + 1)
+          } else {
+            resolve()
+          }
+        })
+      })(0)
+    })
+  }
+}
+
+init()
+</script>
+</html>

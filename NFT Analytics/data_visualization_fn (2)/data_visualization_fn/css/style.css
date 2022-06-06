@@ -1,0 +1,132 @@
+
+body{
+  margin: 0px ;
+  background-color: #121212;
+  font-family: Arial Black;
+}
+img{
+  display: inline-block;
+}
+
+.topbar{
+  width: 100%;
+  height: 60px;
+  display: flex;
+  background-color: #1E1F25;
+}
+.list{
+  width: 100%;
+  height: 60px;
+  display: flex;
+  background-color: #121212;
+  line-height: 100px;
+}
+.page a{
+  font-size: 15px;
+  margin-left: 30px;
+  color: #767C8D;
+  text-decoration: none;
+}
+.page{
+  /*background-color: blue;*/
+  width: 35%;
+  height: 60px;
+  margin-left: 30px;
+  display: flex;
+  align-items: center;
+  /*margin-top: 60px;*/
+}
+.page a:hover {
+    color: white;
+}
+.contact{
+  /*background-color: white;*/
+  width: 60%;
+  height: 60px;
+  margin-left: 150px;
+/*   margin-top: 10px; */
+}
+.contact_detail{
+  background-color: #1E1F25;
+  border: 1px #3C4254 solid;
+  width: 15%;
+  height: 70%;
+  margin-left: 3%;
+  display: inline-block;
+  border-radius:10px
+}
+.chart{
+  display: inline-block;
+  display: flex;
+}
+.whalse{
+  background-color: #121212;
+  width: 60%;
+  height: 680px;
+  display: inline-block;
+}
+.whalse_detail{
+  background-color: #121212;
+  width: 40%;
+  height: 680px;
+  display: inline-block;
+}
+.bar{
+  background-color: #121212;
+  width: 100%;
+  height: 340px;
+}
+.headerTab .tabLine { 
+  position:absolute; 
+  /*top:66px; */
+  height:2px; 
+  background:#35b0f2; 
+  left:0; width:100%; 
+  overflow:hidden; 
+  font-size:0; 
+  line-height:0;
+}
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* 定位 */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.banner{
+  height: 80px;
+  width: 100%;
+  background-color: #1E1F25;
+  color: white;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.blinking-cursor {
+  animation: blink 1s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}

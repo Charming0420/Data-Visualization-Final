@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Data visualization final program</title>
+   
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css?v=<?=time()?20220605" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Topbar Start -->
+    <div class="topbar">
+        <img src="logo.png">
+    </div>
+    <!-- Topbar End -->
+
+
+    <!-- list Start -->
+    <div class="list">
+        <div class="page headerTab" id="headerTab">
+            <a href="intro.html">introduction</a>
+            <a href="index1.html">analysis</a>x
+            <!-- <i class="tabLine"></i> -->
+        </div>
+        <div class="contact">
+            <div class="contact_detail">
+                
+            </div>
+            <div class="contact_detail">
+                
+            </div>
+            <div class="contact_detail">
+                
+            </div>
+            <div class="contact_detail">
+                
+            </div>
+        </div>
+    </div>
+    
+    <!-- list End -->
+    <div class="tooltip">鼠标移动到这
+        <span class="tooltiptext">提示文本</span>
+    </div>
+
+    <!-- chart start -->
+    <div class="chart">
+        <div class="whalse">
+            
+        </div>
+        <div class="whalse_detail">
+            <div class="bar">
+                
+            </div>
+            <div class="bar">
+                
+            </div>
+        </div>
+        
+    </div>
+    
+    <!-- chart end -->
+</body>
+<script type="text/javascript" src="jquery-1.6.2.min.js"></script>
+<script>
+    var headerTabArray = $("#headerTab a"),headTabLine = $("#headerTab .tabLine"),tabIndex,headerTabArrayLength = headerTabArray.length,headerTabWidthArray = [],headerTabPositonArray = [],defaultNum = 0;
+    for(var i=0;i<headerTabArrayLength;i  ){
+        headerTabWidthArray[i] = headerTabArray.eq(i).width()   10;
+        headerTabPositonArray[i] = headerTabArray.eq(i).position().left   10;  
+    }
+    headerTabArray.mouseover(function(){
+        $("#headerTab i:animated").stop();
+        tabIndex = $(this).index();
+        headTabLine.animate({width:headerTabWidthArray[tabIndex],left:headerTabPositonArray[tabIndex]},300);
+    })
+    headerTabArray.mouseout(function(){
+        $("#headerTab i:animated").stop();
+        tabIndex = $(this).index();
+        headTabLine.animate({width:headerTabWidthArray[defaultNum],left:headerTabPositonArray[defaultNum]},300);
+    })
+    defaultNum = 0;
+    headTabLine.animate({width:headerTabWidthArray[defaultNum],left:headerTabPositonArray[defaultNum]},300);
+</script>
+s
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="en">
+<link rel="stylesheet" href="mystyle.css">
+
+<script src="https://d3js.org/d3.v6.js"></script>
+<script type="text/javascript" src="js/backend1.js"></script>
+
+
+
+<head>
+    <meta charset="utf-8">
+    <title>Data visualization final program</title>
+   
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css?v=<?=time()?20220605" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+
+</head>
+
+<body>
+    <!-- Topbar Start -->
+    <div class="topbar">
+        <img src="logo.png">
+    </div>
+    <!-- Topbar End -->
+
+
+    <!-- list Start -->
+    <div class="list">
+        <div class="page headerTab" id="headerTab">
+            <a href="intro.html">introduction</a>
+            <a href="index1.html">analysis</a>x
+            <!-- <i class="tabLine"></i> -->
+        </div>
+        <div class="contact">
+            <div class="contact_detail" class="websitesquare">
+              <a id="website"><img src="../front end/icon/website.png" class="icon_detail"></a>
+            </div>
+            <div class="contact_detail">
+              <a id="twitter"><img src="../front end/icon/twitter.png" class="icon_detail"></a>               
+            </div>
+            <div class="contact_detail">
+              <a id="discord"><img src="../front end/icon/discord.png" class="icon_detail"></a>                
+            </div>
+            <div class="contact_detail">
+              <a id="etherscan"><img src="../front end/icon/etherscan.png" class="icon_detail"></a>             
+                
+            </div>
+        </div>
+    </div>
+    
+    <!-- list End -->
+    <div class="tooltip">鼠标移动到这
+        <span class="tooltiptext">提示文本</span>
+    </div>
+
+    <!-- chart start -->
+    <div class="chart">
+        <div class="whalse">
+            <div id="my_dataviz"></div>
+        </div>
+        <div class="whalse_detail">
+            <div class="bar">
+                
+            </div>
+            <div class="bar">
+                
+            </div>
+        </div>
+        
+    </div>
+    
+    <!-- chart end -->
+</body>
+<script type="text/javascript" src="jquery-1.6.2.min.js"></script>
+<script>
+    var headerTabArray = $("#headerTab a"),headTabLine = $("#headerTab .tabLine"),tabIndex,headerTabArrayLength = headerTabArray.length,headerTabWidthArray = [],headerTabPositonArray = [],defaultNum = 0;
+    for(var i=0;i<headerTabArrayLength;i  ){
+        headerTabWidthArray[i] = headerTabArray.eq(i).width()   10;
+        headerTabPositonArray[i] = headerTabArray.eq(i).position().left   10;  
+    }
+    headerTabArray.mouseover(function(){
+        $("#headerTab i:animated").stop();
+        tabIndex = $(this).index();
+        headTabLine.animate({width:headerTabWidthArray[tabIndex],left:headerTabPositonArray[tabIndex]},300);
+    })
+    headerTabArray.mouseout(function(){
+        $("#headerTab i:animated").stop();
+        tabIndex = $(this).index();
+        headTabLine.animate({width:headerTabWidthArray[defaultNum],left:headerTabPositonArray[defaultNum]},300);
+    })
+    defaultNum = 0;
+    headTabLine.animate({width:headerTabWidthArray[defaultNum],left:headerTabPositonArray[defaultNum]},300);
+</script>
+
+<!-- 以下為左側主表格區塊 -->
+<script>
+
+    // set the dimensions and margins of the graph
+    const margin = { top: 30, right: 30, bottom: 210, left: 60 },
+        width = 1900 - margin.left - margin.right,
+        height = 900 - margin.top - margin.bottom;
+
+    // append the svg object to the body of the page
+    const svg = d3.select("#my_dataviz")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    // Parse the Data
+    d3.csv("new_top150.csv").then(function (data) {
+
+        // X axis
+        const x = d3.scaleBand()
+            .range([0, width])
+            .domain(data.map(d => d.NFT))
+            .padding(0.2);
+        svg.append("g")
+            .attr("transform", `translate(0, ${height})`)
+            .call(d3.axisBottom(x))
+            .selectAll("text")
+            .attr("transform", "translate(-10,0)rotate(-45)")
+            .style("text-anchor", "end")
+            .style("color", "white");
+
+        // Add Y axis
+        const y = d3.scaleLinear()
+            .domain([0, 100])
+            .range([height, 0]);
+        svg.append("g")
+            .call(d3.axisLeft(y))
+            .style("color", "white");
+
+
+        // Bars
+        svg.selectAll("mybar")
+            .data(data)
+            .join("rect")
+            .attr("x", d => x(d.NFT))
+            .attr("y", d => y(d.Percentage))
+            .attr("width", x.bandwidth())
+            .attr("height", d => height - y(d.Percentage))
+            .attr("fill", "pink")
+
+    })
+</script>
+</html>

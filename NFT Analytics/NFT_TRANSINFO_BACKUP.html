@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html>
+  <head></head>
+  <body>
+    <form method="post" name="nftform" id="nftform">
+      contract_address:
+      <input type="text" name="contract_address" id="address" />
+      <input
+        type="button"
+        name="submit"
+        value="OK"
+        onclick="find_nft_contract_all();"
+      />
+    </form>
+    <form method="post" name="nftname" id="nftname">
+      Name:
+      <input type="text" name="contract_address" id="nft_name" />
+      <input
+        type="button"
+        name="submit"
+        value="OK"
+        onclick="find_nft_contract_by_name();"
+      />
+    </form>
+  </body>
+
+  <script>
+    //Use contract address to find the nft slug and contact info(OK)
+    function find_slug(contract_address) {
+      const options = { method: "GET" }
+      return fetch(
+        "https://api.opensea.io/api/v1/asset_contract/" + contract_address,
+        options
+      )
+        .then(response => {
+          return response.json();
+        })
+        .catch((err) => console.error(err))
+    }
+
+    //use slug to find the nft detail info
+    function slug_to_contract(nft_slug) {
+      var nftslugurl =
+        "https://api.opensea.io/api/v1/collection/" + nft_slug + "/stats"
+      const options = { method: "GET", headers: { Accept: "application/json" } }
+      fetch(nftslugurl, options)
+        .then(response => response.json())
+        .then((response) => console.log(response))
+        .catch((err) => console.error(err))
+    }
+
+    //direct use contract to find detail function
+    async function find_nft_contract_all() {
+      var contract_address = document.getElementById("address").value
+      const nft_detail_info = await find_slug(contract_address);
+      console.log(nft_detail_info);
+
+      ///NAME
+      name=nft_detail_info.name
+      name_1 = name.replace(/\s*/g,"");
+      console.log(name_1);
+      ///SLUG
+      nft_slug2 = nft_detail_info.collection.slug 
+      ///DISCORD URL
+      discord = nft_detail_info.collection.discord_url
+      ///TWITTER URL
+      if(nft_detail_info.collection.twitter_username==null)
+      {
+        twitter = 'https://twitter.com/'+name_1
+        console.log("No twitter");
+      }
+      else
+      {
+        twitter_name = nft_detail_info.collection.twitter_username
+        twitter = 'https://twitter.com/'+twitter_name
+      }
+      ///WEBSITE URL
+      website = nft_detail_info.collection.discord_url
+      console.log(nft_slug2,discord,twitter,website);
+      
+    }
+
+    //use name to find contract then find detail function
+    async function use_name_find_nft_contract_all(contract_address_by_name) {
+      const nft_detail_info = await find_slug(contract_address_by_name);
+      // console.log(nft_detail_info);
+
+      ///NAME
+      name=nft_detail_info.name
+      name_1 = name.replace(/\s*/g,"");
+      ///SLUG
+      nft_slug2 = nft_detail_info.collection.slug 
+      ///DISCORD URL
+      discord = nft_detail_info.collection.discord_url
+      ///TWITTER URL
+      if(nft_detail_info.collection.twitter_username==null)
+      {
+        twitter = 'https://twitter.com/'+name_1
+        // console.log("No twitter");
+      }
+      else
+      {
+        twitter_name = nft_detail_info.collection.twitter_username
+        twitter = 'https://twitter.com/'+twitter_name
+      }
+      ///WEBSITE URL
+      website = nft_detail_info.collection.external_url
+      ///show all info
+      console.log("address : "+contract_address_by_name);
+      console.log("name : "+name_1);
+      console.log("slug : "+nft_slug2);
+      console.log("discord : "+discord);
+      console.log("twitter : "+twitter);
+      console.log("website : "+website);
+    }
+
+
+    async function find_nft_contract_by_name()
+    {
+      var name_to_contract_address = await search_by_name(1)
+      // console.log(name_to_contract_address);
+      ///address 
+      contract_address_by_name = name_to_contract_address.result[0].token_address;
+      // console.log(contract_address_by_name);///透過名稱去鏈上遍歷找到合約
+      use_name_find_nft_contract_all(contract_address_by_name);
+    }
+
+
+    function search_by_name()
+    {
+      var nft_name = document.getElementById("nft_name").value
+      var searchapi =
+        "https://deep-index.moralis.io/api/v2/nft/search?chain=eth&format=decimal&q=" + nft_name + "&filter=name"
+      const options = { method: "GET", headers: { "Accept": "application/json","X-API-Key": "6FAF5fwmYKqG4MZR7xlf5lXYRVGc4wVqsNMBfhC37fJJjEOQVJLWYEZMqaBZFQv7"} }
+      return fetch(searchapi, options)
+        .then(response => {return response.json()})
+        .catch((err) => console.error(err))
+    }
+
+
+
+
+  </script>
+</html>
