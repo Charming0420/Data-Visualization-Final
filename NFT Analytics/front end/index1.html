@@ -98,8 +98,8 @@
 <script>
 
     // set the dimensions and margins of the graph
-    const margin = { top: 30, right: 30, bottom: 210, left: 60 },
-        width = 1900 - margin.left - margin.right,
+    const margin = { top: 30, right: 10, bottom: 210, left: 100 },
+        width = 5000 - margin.left - margin.right,
         height = 900 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
@@ -122,8 +122,9 @@
             .attr("transform", `translate(0, ${height})`)
             .call(d3.axisBottom(x))
             .selectAll("text")
-            .attr("transform", "translate(-10,0)rotate(-45)")
+            .attr("transform", "translate(-10,0)rotate(-55)")
             .style("text-anchor", "end")
+            .style("font", "12px times")
             .style("color", "white");
 
         // Add Y axis
@@ -133,6 +134,15 @@
         svg.append("g")
             .call(d3.axisLeft(y))
             .style("color", "white");
+
+        // // Add a clipPath: everything out of this area won't be drawn.
+        // var clip = Svg.append("defs").append("svg:clipPath")
+        //     .attr("id", "clip")
+        //     .append("svg:rect")
+        //     .attr("width", width)
+        //     .attr("height", height)
+        //     .attr("x", 0)
+        //     .attr("y", 0);
 
 
         // Bars
@@ -144,6 +154,25 @@
             .attr("width", x.bandwidth())
             .attr("height", d => height - y(d.Percentage))
             .attr("fill", "pink")
+
+        // Add a legend (interactive)
+        svg
+            .selectAll("myLegend")
+            .data(data)
+            .join('g')
+            .append("text")
+            .attr('x', 0)
+            .attr('y', 30)
+            .text("Legend1")
+            .style("fill", "white")
+            .style("font-size", 15)
+            .on("click", function (event, d) {
+                // is the element currently visible ?
+                currentOpacity = d3.selectAll("." + d.name).style("opacity")
+                // Change the opacity: from 0 to 1 or from 1 to 0
+                d3.selectAll("." + d.name).transition().style("opacity", currentOpacity == 1 ? 0 : 1)
+
+            })
 
     })
 </script>

@@ -68,8 +68,9 @@ img{
 .whalse{
   background-color: #121212;
   width: 60%;
-  height: 680px;
+  height: 960px;
   display: inline-block;
+  overflow: scroll;
 }
 .whalse_detail{
   background-color: #121212;
