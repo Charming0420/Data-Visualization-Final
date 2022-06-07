@@ -169,25 +169,6 @@
             .attr("height", d => height - y(d.Percentage))
             .attr("fill", "pink")
 
-        // Add a legend (interactive)
-        svg
-            .selectAll("myLegend")
-            .data(data)
-            .join('g')
-            .append("text")
-            .attr('x', 0)
-            .attr('y', 30)
-            .text("Legend1")
-            .style("fill", "white")
-            .style("font-size", 15)
-            .on("click", function (event, d) {
-                // is the element currently visible ?
-                currentOpacity = d3.selectAll("." + d.name).style("opacity")
-                // Change the opacity: from 0 to 1 or from 1 to 0
-                d3.selectAll("." + d.name).transition().style("opacity", currentOpacity == 1 ? 0 : 1)
-
-            })
-
     })
 </script>
 </html>
