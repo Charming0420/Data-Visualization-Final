@@ -6,17 +6,19 @@ body{
 }
 img{
   display: inline-block;
+  margin-left: 10px;
+  margin-top: 5px;
 }
 
 .topbar{
   width: 100%;
-  height: 60px;
+  height: 50px;
   display: flex;
   background-color: #1E1F25;
 }
 .list{
   width: 100%;
-  height: 60px;
+  height: 30px;
   display: flex;
   background-color: #121212;
   line-height: 100px;
@@ -30,33 +32,34 @@ img{
 .page{
   /*background-color: blue;*/
   width: 35%;
-  height: 60px;
+  height: 30px;
   margin-left: 30px;
   display: flex;
   align-items: center;
-  /*margin-top: 60px;*/
+  margin-top: 5px;
 }
 .page a:hover {
     color: white;
 }
-.contact{
-  /*background-color: white;*/
+/*.contact{
+  background-color: white;
   width: 60%;
   height: 60px;
   margin-left: 150px;
-/*   margin-top: 10px; */
-}
+  margin-top: 0px; 
+}*/
 .contact_detail{
   background-color: #1E1F25;
   border: 1px #3C4254 solid;
-  width: 15%;
-  height: 70%;
-  margin-left: 3%;
+  width: 8%;
+  height: 100%;
+  margin-left: 2%;
+  margin-top: 7px;
   display: inline-block;
   border-radius:10px
 }
 .chart{
-  display: inline-block;
+  /*display: inline-block;*/
   display: flex;
 }
 .whalse{
@@ -113,8 +116,8 @@ img{
 .banner{
   height: 80px;
   width: 100%;
-  background-color: #1E1F25;
-  color: white;
+  background-color: #121212;
+  color: #767C8D;
   font-size: 20px;
   display: flex;
   align-items: center;
@@ -129,4 +132,61 @@ img{
   to {
     visibility: hidden;
   }
+}
+
+.intro{
+  height: 400px;
+  width: 100%;
+  display: flex;
+}
+
+.intro_detail{
+  /*background-color: blue;*/
+  height: 85%;
+  width: 30%;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 5%;
+}
+
+.intro_detail h1{
+  display:inline;
+  color: white;
+  font-family: MS Sans Serif;
+}
+.intro_detail h2{
+  display:inline;
+  color: white;
+  font-family: MS Sans Serif;
+  font-weight: 200;
+}
+
+.intro_detail h4{
+  color: #215277;
+  font-family: MS Sans Serif;
+  font-weight: 200;
+  line-height: 30px;
+}
+
+.intro_detail button{
+  background-color: #121212;
+  border: 1px #215277 solid;
+  color: #215277;
+  width: 40%;
+  height: 10%;
+  display: inline-block;
+  font-size: 15px;
+  /*border-radius:10px*/
+}
+
+.intro_picture{
+  background-color: white;
+  height: 100%;
+  width: 60%;
+  display: inline-block;
+}
+
+.foot{
+  width: 100%;
+  height: 100px;
 }
