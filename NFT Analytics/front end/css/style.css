@@ -6,6 +6,8 @@ body{
 }
 img{
   display: inline-block;
+  margin-left: 10px;
+  margin-top: 5px;
 }
 
 .topbar{
@@ -40,23 +42,25 @@ img{
     color: white;
 }
 .contact{
-  /*background-color: white;*/
-  width: 60%;
+  /*background-color: blue;*/
+  width: 20%;
   height: 60px;
-  margin-left: 150px;
+  margin-left: 1000px;
   text-align:center;
-
-
-/*   margin-top: 10px; */
+   /*margin-top: 10px; */
 }
 .contact_detail{
-  background-color: #1E1F25;
-  border: 1px #3C4254 solid;
-  width: 15%;
+  /*background-color: #1E1F25;*/
+  /*border: 1px #3C4254 solid;*/
+  
+  margin:auto;
+  align-items: center;
+  width: 3%;
   height: 70%;
-  margin-left: 3%;
+  margin-left:  10%;
+  margin-top: 5%;
   display: inline-block;
-  border-radius:10px;
+  /*border-radius:10px;*/
   align-items: center;    /* ★ */
   
 
@@ -97,6 +101,7 @@ img{
     position: relative;
     display: inline-block;
     border-bottom: 1px dotted black;
+    color: white;
 }
 
 .tooltip .tooltiptext {
@@ -107,7 +112,7 @@ img{
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
-
+    font-size: 2px;
     /* 定位 */
     position: absolute;
     z-index: 1;
@@ -118,10 +123,10 @@ img{
 }
 
 .banner{
-  height: 80px;
+    height: 80px;
   width: 100%;
-  background-color: #1E1F25;
-  color: white;
+  background-color: #121212;
+  color: #767C8D;
   font-size: 20px;
   display: flex;
   align-items: center;
@@ -140,7 +145,7 @@ img{
 
 
 .icon_detail{
-  height: 80%;
+  height: 65%;
   /* width: 100%; */
   display: flex;
   display:block;
@@ -152,4 +157,61 @@ img{
 .websitesquare{
   text-align : center;
 
+}
+
+.intro{
+  height: 400px;
+  width: 100%;
+  display: flex;
+}
+
+.intro_detail{
+  /*background-color: blue;*/
+  height: 85%;
+  width: 30%;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 5%;
+}
+
+.intro_detail h1{
+  display:inline;
+  color: white;
+  font-family: MS Sans Serif;
+}
+.intro_detail h2{
+  display:inline;
+  color: white;
+  font-family: MS Sans Serif;
+  font-weight: 200;
+}
+
+.intro_detail h4{
+  color: #215277;
+  font-family: MS Sans Serif;
+  font-weight: 200;
+  line-height: 30px;
+}
+
+.intro_detail button{
+  background-color: #121212;
+  border: 1px #215277 solid;
+  color: #215277;
+  width: 40%;
+  height: 10%;
+  display: inline-block;
+  font-size: 15px;
+  /*border-radius:10px*/
+}
+
+.intro_picture{
+  background-color: white;
+  height: 100%;
+  width: 60%;
+  display: inline-block;
+}
+
+.foot{
+  width: 100%;
+  height: 100px;
 }
