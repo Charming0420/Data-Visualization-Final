@@ -45,9 +45,16 @@
     <!-- list Start -->
     <div class="list">
         <div  class="contact">
-            <div class="contact_detail websitesquare">
-                <a id="logo"><img src="" class="icon_detail" title="prologo" id="prologo"></a>                   
+          
+            <div class="iconspace contact_detail websitesquare">
+                <div id="logo"><img src="" class="logo_detail icon_detail" title="prologo" id="prologo" style="border:2px white solid;"></div>                   
             </div>
+            <div class="proname">
+              <span id="projectname" class="textcenter"></span>                  
+            </div>
+
+
+
             <div class="contact_detail tooltip websitesquare">
                 <a id="website"><img src="../front end/icon/website.png" class="icon_detail" title="website"></a>
                 <!-- <span class="tooltiptext">website</span> -->
@@ -135,7 +142,7 @@
 
     // set the dimensions and margins of the graph
     const margin = { top: 30, right: 10, bottom: 210, left: 100 },
-        width = 4500 - margin.left - margin.right,
+        width = 6000 - margin.left - margin.right,
         height = 900 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
@@ -157,10 +164,11 @@
         svg.append("g")
             .attr("transform", `translate(0, ${height})`)
             .call(d3.axisBottom(x))
-        //     .selectAll("text")
-        //     .attr("transform", "translate(-10,0)rotate(-55)")
-        //     .style("text-anchor", "end")
-            .style("font", "0px times")
+            .selectAll("text")
+            .attr("transform", "translate(-10,0)rotate(-55)")
+            .style("text-anchor", "end")
+            .style("font", "13px serif")
+            .style("font-weight", "600")
             .style("color", "white");
 
         // Add Y axis
@@ -182,7 +190,8 @@
 
         // 抓取bar的NFT項目名稱
         const mouseclick = function (event, d) {
-            d3.select(this).style("fill", "white")
+            d3.selectAll("rect").style("fill", "#FFCBED")
+            d3.select(this).style("fill", "#C6FEF2")
             var nftname = d.NFT
             console.log(nftname)
             // d3.selectAll("rect").style("opacity", e => {
@@ -208,6 +217,18 @@
             // .attr('stroke-width', 3)
             .on("click", mouseclick)
 
+        //圖表標題
+        svg
+            .selectAll("myLegend1")
+            .data(data)
+            .enter()
+            .append('g')
+            .append("text")
+            .attr('x', 900)
+            .attr('y', 20)
+            .text("左側圖表標題")
+            .style("fill", "#C6FEF2")
+            .style("font-size", 40)
         
         // const mousemove = function (event, d, i) {
         //     grp = d.key

@@ -1,4 +1,3 @@
-
 html{
   height: 100%;
 }
@@ -46,10 +45,11 @@ img{
 .list{
   /*background-color: white;*/
   width: 100%;
-  height: 50px;
+  height: 70px;
   display: flex;
   /*background-color: #121212;*/
-  line-height: 100px;
+  display: flex;
+  align-items: center;  
 }
 .contact{
   /*background-color: blue;*/
@@ -161,7 +161,7 @@ img{
 
 
 .icon_detail{
-  height: 65%;
+  height: 60%;
   /* width: 100%; */
   display: flex;
   display:block;
@@ -250,4 +250,28 @@ img{
 .foot{
   width: 100%;
   height: 100px;
+}
+
+.proname{
+  color: white;
+  display: flex;          /* ★ */
+  align-items: center;    /* ★ */
+  width: 800px;
+}
+
+.iconspace{
+  width: 200px;
+}
+
+.textcenter{
+  /* text-align: center; */
+  width: 200px;
+  line-height: 60px;
+
+}
+
+.logo_detail{
+  /* margin-right: 20px; */
+  border: 20px white;
+  height: 30px;
 }

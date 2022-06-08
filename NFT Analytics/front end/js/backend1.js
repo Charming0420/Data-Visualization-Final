@@ -89,6 +89,7 @@
       ///NAME
       name=nft_detail_info.name
       name_1 = name.replace(/\s*/g,"");
+      name_2 = nft_detail_info.name
       ///SLUG
       nft_slug2 = nft_detail_info.collection.slug 
       ///DISCORD URL
@@ -124,7 +125,7 @@
       document.getElementById("twitter").href = twitter;
       document.getElementById("discord").href = discord;
       document.getElementById("etherscan").href = "https://etherscan.io/address/"+contract_address_by_name;
-
+      document.getElementById("projectname").innerHTML = name_2;
 
 
     }
