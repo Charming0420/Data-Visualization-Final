@@ -1,4 +1,4 @@
-    use_name_find_nft_contract_all("0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d") //預設 到時候換掉
+    use_name_find_nft_contract_all("0x081FAC886FDcacdC826C4135ED4BA5b65ecEcFb8") //預設 到時候換掉
 
 
     //----------------------------------------------------------------------------------------------//
@@ -61,6 +61,12 @@
       ///WEBSITE URL
       website = nft_detail_info.collection.discord_url
       console.log(nft_slug2,discord,twitter,website);
+      ///ICON LOGO
+      // console.log(nft_detail_info.image_url);
+      projectlogo = nft_detail_info.image_url
+      console.log("logo : "+projectlogo);
+
+
       var nftslugurl =
         "https://api.opensea.io/api/v1/collection/" + nft_slug2 + "/stats"
       const options = { method: "GET", headers: { Accept: "application/json" } }
@@ -100,6 +106,9 @@
       }
       ///WEBSITE URL
       website = nft_detail_info.collection.external_url
+      ///ICON LOGO
+      // console.log(nft_detail_info.image_url);
+      projectlogo = nft_detail_info.image_url
       ///show all info
       console.log("address : "+contract_address_by_name);
       console.log("name : "+name_1);
@@ -107,8 +116,10 @@
       console.log("discord : "+discord);
       console.log("twitter : "+twitter);
       console.log("website : "+website);
+      console.log("logo : "+projectlogo);
 
       ///改變按鈕HREF
+      document.getElementById("prologo").src = projectlogo;
       document.getElementById("website").href = website;
       document.getElementById("twitter").href = twitter;
       document.getElementById("discord").href = discord;
