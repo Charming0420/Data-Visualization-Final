@@ -13,7 +13,7 @@
     <title>Data visualization final program</title>
    
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/style.css?v=<?=time()?20220605" rel="stylesheet">
+    <link href="css/style.css?v=<?=time()?20220610" rel="stylesheet">
     <link rel="stylesheet" href="./css/style.css">
 
 </head>
@@ -22,23 +22,10 @@
     <!-- Topbar Start -->
     <div class="topbar">
         <img src="logo2.png">
-        <div  class="contact">
-            <div class="contact_detail tooltip websitesquare">
-                <a id="website"><img src="../front end/icon/website.png" class="icon_detail"></a>
-                <span class="tooltiptext">website</span>
-            </div>
-            <div class="contact_detail tooltip">
-                <a id="twitter"><img src="../front end/icon/twitter.png" class="icon_detail"></a>       
-                <span class="tooltiptext">twitter</span>       
-            </div>
-            <div class="contact_detail tooltip">
-                <a id="discord"><img src="../front end/icon/discord.png" class="icon_detail"></a>        
-                <span class="tooltiptext">discord</span>      
-            </div>
-            <div class="contact_detail tooltip">
-                <a id="etherscan"><img src="../front end/icon/etherscan.png" class="icon_detail"></a>      
-                <span class="tooltiptext">etherscan</span>       
-            </div>
+        <div class="page headerTab" id="headerTab">
+            <a href="intro.html">introduction</a>
+            <a href="index1.html">analysis</a>
+            <!-- <i class="tabLine"></i> -->
         </div>
         
     </div>
@@ -47,25 +34,27 @@
 
     <!-- list Start -->
     <div class="list">
-        <div class="page headerTab" id="headerTab">
-            <a href="intro.html">introduction</a>
-            <a href="index1.html">analysis</a>x
-            <!-- <i class="tabLine"></i> -->
+        <div  class="contact">
+            <div class="contact_detail websitesquare">
+                
+            </div>
+            <div class="contact_detail tooltip websitesquare">
+                <a id="website"><img src="../front end/icon/website.png" class="icon_detail" title="website"></a>
+                <!-- <span class="tooltiptext">website</span> -->
+            </div>
+            <div class="contact_detail tooltip">
+                <a id="twitter"><img src="../front end/icon/twitter.png" class="icon_detail" title="twitter"></a>       
+                <!-- <span class="tooltiptext">twitter</span>        -->
+            </div>
+            <div class="contact_detail tooltip">
+                <a id="discord"><img src="../front end/icon/discord.png" class="icon_detail" title="discord"></a>        
+                <!-- <span class="tooltiptext">discord</span>       -->
+            </div>
+            <div class="contact_detail tooltip">
+                <a id="etherscan"><img src="../front end/icon/etherscan.png" class="icon_detail" title="etherscan"></a>      
+                <!-- <span class="tooltiptext">etherscan</span>        -->
+            </div>
         </div>
-        <!-- <div class="contact">
-            <div class="contact_detail" class="websitesquare">
-              <a id="website"><img src="../front end/icon/website.png" class="icon_detail"></a>
-            </div>
-            <div class="contact_detail">
-              <a id="twitter"><img src="../front end/icon/twitter.png" class="icon_detail"></a>               
-            </div>
-            <div class="contact_detail">
-              <a id="discord"><img src="../front end/icon/discord.png" class="icon_detail"></a>                
-            </div>
-            <div class="contact_detail">
-              <a id="etherscan"><img src="../front end/icon/etherscan.png" class="icon_detail"></a>             
-            </div>
-        </div> -->
     </div>
     
     <!-- list End -->
@@ -88,6 +77,11 @@
     <!-- chart end -->
 </body>
 <script type="text/javascript" src="jquery-1.6.2.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
 <script>
     var headerTabArray = $("#headerTab a"),headTabLine = $("#headerTab .tabLine"),tabIndex,headerTabArrayLength = headerTabArray.length,headerTabWidthArray = [],headerTabPositonArray = [],defaultNum = 0;
     for(var i=0;i<headerTabArrayLength;i  ){
