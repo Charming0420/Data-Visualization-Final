@@ -1,4 +1,4 @@
-    use_name_find_nft_contract_all("0x03a1343c5eff84ae346f28f7b7072624ca2b170e") //預設 到時候換掉
+    use_name_find_nft_contract_all("0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d") //預設 到時候換掉
 
 
     //----------------------------------------------------------------------------------------------//
@@ -39,7 +39,7 @@
       var contract_address = document.getElementById("address").value
       const nft_detail_info = await find_slug(contract_address);
       console.log(nft_detail_info);
-      ///NAME
+      ///NAME 
       name=nft_detail_info.name
       name_1 = name.replace(/\s*/g,"");
       console.log(name_1);
@@ -171,7 +171,7 @@
       }
       else
       {
-        console.log(historyfp);
+        process_json(historyfp) //去做json前處理
       }
     }
 
@@ -186,8 +186,7 @@
       // let from = moment().subtract(90, 'days').format('YYYY-MM-DD')
       let from = "2022-03-06"
       let currentDay = "2022-04-06"
-      // var address="0x82016d4ad050ef4784e282b82a746d3e01df23bf" //暫時的合約
-
+      // var address="0x82016d4ad050ef4784e282b82a746d3e01df23bf" //暫時的合約  
 
       var historyfpapi = "https://api.covalenthq.com/v1/1/nft_market/collection/"+address+"/?from="+from+"&to="+currentDay
       return fetch(historyfpapi, {headers:{
@@ -196,3 +195,87 @@
         .then(response => {return response.json()})
         .catch((err) => console.error(err))
     }
+
+    //----------------------------------------------------------------------------------------------//
+    //                              剖析API所得JSON檔案並做轉換後重新塞入新的JSON                        //
+    //---------------------------------------------------------------------------------------------//    
+    function process_json(historyfp)
+    {
+      // console.log(historyfp);
+      var priceXdata =[]
+      for(var i = 0; i < 31; i++)
+      {
+        var newdate = historyfp.data.items[i].opening_date
+        var newprice = historyfp.data.items[i].floor_price_quote_7d;
+        newdate=newdate.substr(5)
+        // console.log(newdate);
+        add={day:newdate,floorprice:newprice}
+        priceXdata.push(add)
+      }
+      console.log(JSON.stringify(priceXdata));
+      d3.select(window).on("resize", drawdiagram(priceXdata));
+    }
+
+
+
+    //----------------------------------------------------------------------------------------------//
+    //                                              畫圖時間                                         //
+    //---------------------------------------------------------------------------------------------//    
+    async function drawdiagram(data)
+    {
+        const parseTime = d3.timeParse('%m-%d')
+        for(var x = 0; x < 31; x++)
+        {
+            data[x].day = parseTime(data[x].day);
+        }
+        // console.log(data);
+        // set the dimensions and margins of the graph
+        const width = 700,height = 340;
+
+        // append the svg object to the body of the page
+        svg1 = d3.select("#floorpricechartsvg")
+        var g=svg1.append("g").attr("transform","translate(40,50)");//在svg中添加一个g标签，并移动到（40，50）
+        
+
+        const xScale = d3.scaleTime()
+                    .domain(d3.extent(data,function(d){return d.day}))
+                    .range([ 0, width ])
+
+        const xAxis = d3.axisBottom(xScale)
+                      .tickFormat(d3.timeFormat("%m/%d"))
+
+        g.append("g").attr("transform", `translate(0, ${height})`).call(xAxis).style("color", "white");
+
+
+        // Add Y axis
+        const yScale = d3.scaleLinear()
+          .domain([0,d3.max(data,function(d){return d.floorprice})])
+          .range([ height, 0 ])
+
+        const yAxis = d3.axisLeft(yScale)
+
+        g.append("g").attr("transform","translate(0,0)").call(yAxis).style("color", "white");
+
+
+        var line=d3.line()
+        .x(function(d){return xScale(d.day)})
+        .y(function(d){return yScale(d.floorprice)}).curve(d3.curveLinear);
+          
+        
+        g.append("g")
+        .insert("path")
+        .attr("d",line(data))
+        .attr("stroke","pink")
+        .attr("stroke-width","7")
+        .attr("fill","none")
+
+        
+        g.selectAll("circle")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("cx",function(d){return xScale(d.day)})
+        .attr("cy",function(d){return yScale(d.floorprice)})
+        .attr("r","2").attr("fill","black");                   
+    
+     }
