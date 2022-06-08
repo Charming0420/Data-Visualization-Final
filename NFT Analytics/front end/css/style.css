@@ -19,20 +19,23 @@ img{
   height: 60px;
   display: flex;
   background-color: #1E1F25;
+  position: relative;
 }
 .page a{
-  font-size: 15px;
+  font-size: 18px;
   margin-left: 30px;
   color: #767C8D;
   text-decoration: none;
 }
 .page{
   /*background-color: blue;*/
-  width: 35%;
+  width: 300px;
   height: 100%;
-  margin-left: 65%;
+  /*margin-left: 65%;*/
   display: flex;
   align-items: center;
+  position: absolute;
+  right: 100px;
   /*margin-top: 60px;*/
 }
 .page a:hover {
@@ -93,6 +96,12 @@ img{
   overflow:hidden; 
   font-size:0; 
   line-height:0;
+
+}
+.bar_title{
+  position: absolute;
+  right: 0px;
+  color: white;
 }
 .tooltip {
     position: relative;

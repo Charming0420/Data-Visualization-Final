@@ -12,6 +12,7 @@
 <script src="https://cdn.jsdelivr.net/npm/d3-time-format@4"></script>
 
 
+
 <head>
     <meta charset="utf-8">
     <title>Data visualization final program</title>
@@ -73,10 +74,11 @@
         </div>
         <div class="whalse_detail">
             <div class="bar" id="floorpricechart" style="margin-left: 30px;">
+                <div class="bar_title"><h1>Floor Price</h1></div>
                 <svg id="floorpricechartsvg" width="900" height="800"></svg>
             </div>
             <div class="bar" style="margin-left: 30px;">
-                
+                <div class="bar_title"><h1>Listing Count</h1></div>
             </div>
         </div>
         
@@ -140,7 +142,7 @@
             .selectAll("text")
             .attr("transform", "translate(-10,0)rotate(-55)")
             .style("text-anchor", "end")
-            .style("font", "12px times")
+            .style("font", "10px times")
             .style("color", "white");
 
         // Add Y axis
@@ -169,8 +171,9 @@
             .attr("y", d => y(d.Percentage))
             .attr("width", x.bandwidth())
             .attr("height", d => height - y(d.Percentage))
-            .attr("fill", "pink")
+            .attr("fill", "#215277")
 
+        
     })
 </script>
 <script>gethistoryfp("0xd692ced124a474f051f9744a301c26d1017b3d54")</script>
