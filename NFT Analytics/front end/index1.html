@@ -10,6 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/d3-array@3"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3-time@3"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3-time-format@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 
 
@@ -74,11 +75,22 @@
         </div>
         <div class="whalse_detail">
             <div class="bar" id="floorpricechart" style="margin-left: 10px;">
-                <div class="bar_title"><h2>Floor Price</h2></div>
-                <svg id="floorpricechartsvg" width="900" height="800"></svg>
+              <div class="bar_title"><h2>Floor Price</h2></div>
+              <svg id="floorpricechartsvg" width="900" height="800"></svg>
             </div>
-            <div class="bar" style="margin-left: 10px;">
+            
+            <div class="bar" id="bar" style="margin-left: 10px;">
                 <div class="bar_title"><h2>Listing Count</h2></div>
+                <select id="metric">
+                    <option value="0.01">0.01</option>
+                    <option value="0.05">0.05</option>
+                    <option value="0.1" selected>0.1</option>
+                    <option value="0.2">0.2</option>
+                    <option value="0.5">0.5</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="5">5</option>
+                </select>
             </div>
         </div>
         
@@ -96,7 +108,7 @@
     var headerTabArray = $("#headerTab a"),headTabLine = $("#headerTab .tabLine"),tabIndex,headerTabArrayLength = headerTabArray.length,headerTabWidthArray = [],headerTabPositonArray = [],defaultNum = 0;
     for(var i=0;i<headerTabArrayLength;i  ){
         headerTabWidthArray[i] = headerTabArray.eq(i).width()   10;
-        headerTabPositonArray[i] = headerTabArray.eq(i).position().left   10;  
+        headerTabPositonArray[i] = headerTabArray.eq(i).position().left  10;  
     }
     headerTabArray.mouseover(function(){
         $("#headerTab i:animated").stop();
@@ -177,4 +189,188 @@
     })
 </script>
 <script>gethistoryfp("0xd692ced124a474f051f9744a301c26d1017b3d54")</script>
+
+<script>
+    const address = '0x659A4BdaAaCc62d2bd9Cb18225D9C89b5B697A5A';
+  
+    const getListing = async (address) => {
+      try {
+        const response = await axios.post('http://localhost:3001/api/listingCount', {
+          address
+        });
+        return response
+  
+      } catch (error) {
+        console.log(error)
+      }
+  
+    }
+  
+  
+    // set the dimensions and margins of the graph
+    
+  
+  
+    // get the data
+    (async () => {
+  
+      const response = await getListing(address);
+      const price = response.data.price
+      
+      const data = price.sort(function(a,b) {
+        return (+a) - (+b)
+      })
+      
+      
+      const margin = {
+        top: 10,
+        right: 30,
+        bottom: 30,
+        left: 40
+      },
+      width = 370 - margin.left - margin.right,
+      height = 340 - margin.top - margin.bottom;
+  
+    // append the svg object to the body of the page
+      const svg = d3.select("#bar")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+          `translate(${margin.left},${margin.top})`);
+      // X axis: scale and draw:
+      const x = d3.scaleLinear()
+            .domain([d3.min(data,function(d){ return +d}), d3.max(data,function(d){ return +d})]) 
+            // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
+            .range([0, width]);
+          svg.append("g")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x))
+            .style("color", "white");
+  
+          svg.append("text")
+            .attr("text-anchor", "end")
+            .attr("x",width/2 +30)
+            .attr("y",height + 40)
+            .attr("font-family","sans-serif")
+            .attr("color","white")
+            .text("Price(ETH)")
+  
+          // Y axis: initialization
+          const y = d3.scaleLinear()
+            .range([height, 0]);
+          const yAxis = svg.append("g").style("color", "white");
+  
+          // A function that builds the graph for a specific value of bin
+          function update(nBin) {
+  
+            // set the parameters for the histogram
+            const histogram = d3.histogram()
+              .value(function (d) {
+                return d;
+              }) // I need to give the vector of value
+              .domain(x.domain()) // then the domain of the graphic
+              .thresholds(x.ticks(nBin)); // then the numbers of bins
+  
+            // And apply this function to data to get the bins
+            const bins = histogram(data);
+  
+            // Y axis: update now that we know the domain
+            y.domain([0, d3.max(bins, function (d) {
+              
+              return d.length;
+            })]); // d3.hist has to be called before the Y axis obviously
+            yAxis
+              .transition()
+              .duration(1000)
+              .call(d3.axisLeft(y));
+            
+            
+            const tooltip = d3.select("#bar")
+                .append("div")
+                .style("opacity", 0)
+                .attr("class", "tooltip")
+                .style("background-color", "black")
+                .style("color", "white")
+                .style("border-radius", "5px")
+                .style("padding", "10px")
+                .style("position", "absolute")
+  
+            const showTooltip = function(event,d) {
+              
+              tooltip
+                .transition()
+                .duration(100)
+                .style("opacity", 1)
+              tooltip
+                .html("Range: " + d.x0 + " - " + d.x1 + "<br> Count:" + d.length)
+                .style("left", (event.x) + "px")
+                .style("top", (event.y) + "px")
+            }
+            const moveTooltip = function(event,d) {
+              
+              tooltip
+              .style("left", (event.x) + "px")
+              .style("top", (event.y) + "px")
+            }
+    // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
+            const hideTooltip = function(event,d) {
+              tooltip
+                .transition()
+                .duration(100)
+                .style("opacity", 0)
+            }
+            // Join the rect with the bins data
+            const u = svg.selectAll("rect")
+              .data(bins)
+  
+            // Manage the existing bars and eventually the new ones:
+            u
+              .join("rect")
+               // Add a new rect for each new elements
+              .on("mouseover", showTooltip )
+              .on("mousemove", moveTooltip )
+              .on("mouseleave", hideTooltip )
+              .transition() // and apply changes to all of them
+              .duration(1000)
+              .attr("x", 1)
+              .attr("transform", function (d) {
+                return `translate(${x(d.x0)}, ${y(d.length)})`
+              })
+              .attr("width", function (d) {
+                return x(d.x1) - x(d.x0) - 1;
+              })
+              .attr("height", function (d) {
+                return height - y(d.length);
+              })
+              .style("fill", "#69b3a2")
+              // Show tooltip on hover
+              
+  
+          }
+  
+  
+          // Initialize with 20 bins
+          const min = d3.min(data,function(d){ return Number(+d)})
+          const max = d3.max(data,function(d){ return Number(+d)})
+          const prev_bins = Math.floor( ((max - min) / 0.1))
+          update(prev_bins)
+  
+  
+          // Listen to the button -> update if user change it
+          // d3.select("#nBin").on("input", function () {
+          //   update(+this.value);
+          // });
+  
+          d3.select('#metric')
+            .on('change', function (e) {
+              const num_bins = Math.floor( (max - min) / (+this.value))
+              e.preventDefault()
+              update(num_bins)
+             
+      })
+      
+    })();
+  </script>
 </html>
