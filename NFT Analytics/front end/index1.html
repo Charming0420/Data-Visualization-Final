@@ -184,6 +184,15 @@
             .call(d3.axisLeft(y))
             .style("color", "white");
 
+      // Y axis label:
+      svg.append("text")
+        .attr("text-anchor", "end")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -margin.left + 50)
+        .attr("x", -margin.top + 30)
+        .text("Percentage")
+        .style("fill", "white")
+
         // // Add a clipPath: everything out of this area won't be drawn.
         // var clip = Svg.append("defs").append("svg:clipPath")
         //     .attr("id", "clip")
