@@ -75,22 +75,28 @@
         </div>
         <div class="whalse_detail">
             <div class="bar" id="floorpricechart" style="margin-left: 10px;">
-              <div class="bar_title"><h2>Floor Price</h2></div>
               <svg id="floorpricechartsvg" width="900" height="800"></svg>
             </div>
             
-            <div class="bar" id="bar" style="margin-left: 10px;">
-                <div class="bar_title"><h2>Listing Count</h2></div>
-                <select id="metric">
-                    <option value="0.01">0.01</option>
-                    <option value="0.05">0.05</option>
-                    <option value="0.1" selected>0.1</option>
-                    <option value="0.2">0.2</option>
-                    <option value="0.5">0.5</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="5">5</option>
-                </select>
+            <div class="bar" style="margin-top: 10px;">
+                <!-- <div class="bar_title"><h2>Listing Count</h2></div> -->
+                <div class="listing_select">
+                    <select id="metric">
+                        <option value="0.01">0.01</option>
+                        <option value="0.05">0.05</option>
+                        <option value="0.1" selected>0.1</option>
+                        <option value="0.2">0.2</option>
+                        <option value="0.5">0.5</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="5">5</option>
+                    </select>
+                    <div class="listing_select" id="bar">
+                        
+                    </div>
+                </div>
+                
+                <!-- <svg id="bar"></svg> -->
             </div>
         </div>
         
@@ -197,7 +203,9 @@
             .attr("y", d => y(d.Percentage))
             .attr("width", x.bandwidth())
             .attr("height", d => height - y(d.Percentage))
-            .attr("fill", "#215277")
+            // .attr("stroke", "#1594A2")
+            .attr("fill", "#ABEFF1")
+            // .attr('stroke-width', 3)
             .on("click", mouseclick)
 
         
@@ -254,8 +262,8 @@
         bottom: 30,
         left: 40
       },
-      width = 370 - margin.left - margin.right,
-      height = 340 - margin.top - margin.bottom;
+      width = 450 - margin.left - margin.right,
+      height = 300 - margin.top - margin.bottom;
   
     // append the svg object to the body of the page
       const svg = d3.select("#bar")
@@ -370,7 +378,7 @@
               .attr("height", function (d) {
                 return height - y(d.length);
               })
-              .style("fill", "#69b3a2")
+              .style("fill", "#F3FEE1")
               // Show tooltip on hover
               
   
