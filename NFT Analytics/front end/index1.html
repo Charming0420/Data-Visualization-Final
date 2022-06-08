@@ -239,10 +239,10 @@
 </script>
 
 <script>
-    const address = '0x659A4BdaAaCc62d2bd9Cb18225D9C89b5B697A5A';
   
     const getListing = async (address) => {
       try {
+        
         const response = await axios.post('http://localhost:3001/api/listingCount', {
           address
         });
@@ -260,7 +260,7 @@
   
   
     // get the data
-    (async () => {
+    async function startlisting(address) {
   
       const response = await getListing(address);
       const price = response.data.price
@@ -418,7 +418,6 @@
               update(num_bins)
              
       })
-      
-    })();
+    }
   </script>
 </html>

@@ -1,3 +1,4 @@
+    
     //----------------------------------------------------------------------------------------------//
     //                            用合約地址找SLUG資料之 API function                                 //
     //---------------------------------------------------------------------------------------------// 
@@ -131,8 +132,10 @@
       {
         ///address 
         contract_address_by_name = name_to_contract_address.result[0].token_address;
+
         use_name_find_nft_contract_all(contract_address_by_name);
         gethistoryfp(contract_address_by_name);
+        startlisting(contract_address_by_name);
         // console.log(contract_address_by_name);///透過名稱去鏈上遍歷找到合約
       }
     }
