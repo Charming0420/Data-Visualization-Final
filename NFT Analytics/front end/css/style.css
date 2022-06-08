@@ -86,7 +86,7 @@ img{
 }
 .bar{
 
-  background-color: #1E1F25;
+  background-color: #121212;
   width: 95%;
   height: 65%;
   overflow: hidden;
@@ -177,9 +177,9 @@ img{
 
 .introbody{
   /*background-color: blue;*/
-  width: 80%;
+  width: 60%;
   position: absolute;    
-  left: 10%;
+  left: 20%;
 }
 .intro{
   height: 400px;
@@ -227,7 +227,7 @@ img{
 }
 
 .intro_picture{
-  background-color: white;
+  /* background-color: white; */
   height: 100%;
   width: 60%;
   /*display: inline-block;*/
