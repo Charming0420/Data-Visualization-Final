@@ -195,14 +195,7 @@
             d3.select(this).style("fill", "#C6FEF2")
             var nftname = d.NFT
             console.log(nftname)
-            // d3.selectAll("rect").style("opacity", e => {
-            //     // if (e.NFT == "Psychedelics Anonymous Printing Press") {
-            //     //     return 1;
-            //     // } else { return 0.2; }
-            //     var nftname = d.NFT
-            //     console.log(nftname)
-            //     // console.log(d)
-            // });
+            find_nft_contract_by_name(nftname)
         }
 
         // Bars
@@ -244,7 +237,6 @@
         
     })
 </script>
-<script>gethistoryfp("0xd692ced124a474f051f9744a301c26d1017b3d54")</script>
 
 <script>
     const address = '0x659A4BdaAaCc62d2bd9Cb18225D9C89b5B697A5A';
