@@ -101,9 +101,8 @@
                         <option value="2">2</option>
                         <option value="5">5</option>
                     </select>
-                    <div class="listing_select bar_locate" id="bar">
-                        
-                    </div>
+                    <svg class="listing_select bar_locate" id="listingchart">
+                    </svg>
                     <div style="position: absolute; bottom: 10px; margin-left: 300px;">
                       <h3>Price (ETH)</h3>
                     </div>
@@ -197,6 +196,7 @@
         // 抓取bar的NFT項目名稱
         const mouseclick = function (event, d) {
           d3.select('#floorpricechartsvg').selectAll("*").remove();
+          d3.select('#listingchart').selectAll("*").remove();
           d3.selectAll("rect").style("fill", "#FFCBED")
           d3.select(this).style("fill", "#C6FEF2")
           var nftname = d.NFT
@@ -286,19 +286,19 @@
       height = 330 - margin.top - margin.bottom;
   
     // append the svg object to the body of the page
-      const svg = d3.select("#bar")
-        .append("svg")
+      const svg2 = d3.select("#listingchart")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform",
-          `translate(${margin.left},${margin.top})`);
+          `translate(${margin.left},${margin.top})`)
+          
       // X axis: scale and draw:
       const x = d3.scaleLinear()
             .domain([d3.min(data,function(d){ return +d}), d3.max(data,function(d){ return +d})]) 
             // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
             .range([0, width]);
-          svg.append("g")
+            svg2.append("g")
             .attr("transform", `translate(0,${height})`)
             .call(d3.axisBottom(x))
             .style("color", "white");
@@ -314,7 +314,7 @@
           // Y axis: initialization
           const y = d3.scaleLinear()
             .range([height, 0]);
-          const yAxis = svg.append("g").style("color", "white");
+          const yAxis = svg2.append("g").style("color", "white");
   
           // A function that builds the graph for a specific value of bin
           function update(nBin) {
@@ -376,7 +376,7 @@
                 .style("opacity", 0)
             }
             // Join the rect with the bins data
-            const u = svg.selectAll("rect")
+            const u = svg2.selectAll("rect")
               .data(bins)
   
             // Manage the existing bars and eventually the new ones:

@@ -126,7 +126,8 @@
       // console.log(name_to_contract_address);
       if (name_to_contract_address.total=='0')
       {
-        console.log("Some Data Missing!");
+        newname = nftname.substr(0,5);
+        find_nft_contract_by_name(newname);
       }
       else
       {
@@ -231,7 +232,7 @@
 
         // append the svg object to the body of the page
         svg1 = d3.select("#floorpricechartsvg")
-        var g=svg1.append("g").attr("transform","translate(40,50)");//在svg中添加一个g标签，并移动到（40，50）
+        var g=svg1.append("g").attr("transform","translate(40,50)");
         
 
         const xScale = d3.scaleTime()
