@@ -130,6 +130,7 @@
       }
       else
       {
+        console.log(name_to_contract_address);
         ///address 
         contract_address_by_name = name_to_contract_address.result[0].token_address;
 
