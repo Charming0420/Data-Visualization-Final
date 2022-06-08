@@ -82,12 +82,14 @@
         </div>
         <div class="whalse_detail">
             <div class="bar" id="floorpricechart">
-              <!-- <div class="bar_title"><h2>Floor Price</h2></div> -->
-              <svg id="floorpricechartsvg" width="900" height="800"></svg>
+              <div class="bar_title" style="color: pink;"><h2>Floor Price</h2></div>
+              <div class="bar_locate">
+                <svg id="floorpricechartsvg" width="900" height="800"></svg>
+              </div>
             </div>
             
-            <div class="bar" style="margin-top: 10px;">
-                <!-- <div class="bar_title"><h2>Listing Count</h2></div> -->
+            <div class="bar" style="color: #F3FEE1;">
+                <div class="bar_title"><h2>Listing Count</h2></div>
                 <div class="listing_select">
                     <select id="metric">
                         <option value="0.01">0.01</option>
@@ -99,8 +101,11 @@
                         <option value="2">2</option>
                         <option value="5">5</option>
                     </select>
-                    <div class="listing_select" id="bar">
+                    <div class="listing_select bar_locate" id="bar">
                         
+                    </div>
+                    <div style="position: absolute; bottom: 10px; margin-left: 300px;">
+                      <h3>Price (ETH)</h3>
                     </div>
                 </div>
                 
@@ -277,8 +282,8 @@
         bottom: 30,
         left: 40
       },
-      width = 450 - margin.left - margin.right,
-      height = 300 - margin.top - margin.bottom;
+      width = 650 - margin.left - margin.right,
+      height = 330 - margin.top - margin.bottom;
   
     // append the svg object to the body of the page
       const svg = d3.select("#bar")
@@ -298,13 +303,13 @@
             .call(d3.axisBottom(x))
             .style("color", "white");
   
-          svg.append("text")
-            .attr("text-anchor", "end")
-            .attr("x",width/2 +30)
-            .attr("y",height + 40)
-            .attr("font-family","sans-serif")
-            .attr("color","white")
-            .text("Price(ETH)")
+          // svg.append("text")
+          //   .attr("text-anchor", "end")
+          //   .attr("x",width/2 +30)
+          //   .attr("y",height + 40)
+          //   .attr("font-family","sans-serif")
+          //   .attr("color","white")
+          //   .text("Price(ETH)")
   
           // Y axis: initialization
           const y = d3.scaleLinear()

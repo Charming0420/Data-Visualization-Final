@@ -52,7 +52,7 @@ img{
 }
 .contact{
   /*background-color: blue;*/
-  width: 20%;
+  width: auto;
   height: 60px;
   text-align:center;
   display: flex;
@@ -62,8 +62,8 @@ img{
   /*background-color: #1E1F25;*/
   width: 10%;
   height: 70%;
-  margin-left: 25px;
-  margin-top: 5%;
+  margin-left: 15px;
+  margin-top: 2%;
   display: inline-block;
 }
 .chart{
@@ -72,14 +72,14 @@ img{
 }
 .whalse{
   background-color: #121212;
-  width: 50%;
+  width: 60%;
   height: 85%;
   display: inline-block;
   overflow-x:  scroll;
 }
 .whalse_detail{
   background-color: #121212;
-  width: 45%;
+  width: 40%;
   height: 680px;  
   margin-left: 30px;
   display: inline-block;
@@ -88,7 +88,7 @@ img{
 
   background-color: #1E1F25;
   width: 95%;
-  height: 50%;
+  height: 65%;
   overflow: hidden;
   margin-top: 5px;
   border-radius:10px;
@@ -107,8 +107,8 @@ img{
 .bar_title{
   position: absolute;
   right: 0px;
-  margin-right: 30px;
-  color: white;
+  margin-right: 80px;
+  
 }
 .tooltip {
     position: relative;
@@ -253,10 +253,11 @@ img{
 }
 
 .proname{
+  /* background-color: #215277; */
   color: white;
   display: flex;          /* ★ */
   align-items: center;    /* ★ */
-  width: 800px;
+  width: auto;
 }
 
 .iconspace{
@@ -265,8 +266,8 @@ img{
 
 .textcenter{
   /* text-align: center; */
-  width: 200px;
-  line-height: 60px;
+  /* width: 200px;
+  line-height: 60px; */
 
 }
 
@@ -274,4 +275,9 @@ img{
   /* margin-right: 20px; */
   border: 20px white;
   height: 30px;
+}
+
+.bar_locate{
+  margin-top: 40px;
+  margin-left: 20px;
 }
