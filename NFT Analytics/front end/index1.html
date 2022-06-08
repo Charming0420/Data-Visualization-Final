@@ -191,11 +191,12 @@
 
         // 抓取bar的NFT項目名稱
         const mouseclick = function (event, d) {
-            d3.selectAll("rect").style("fill", "#FFCBED")
-            d3.select(this).style("fill", "#C6FEF2")
-            var nftname = d.NFT
-            console.log(nftname)
-            find_nft_contract_by_name(nftname)
+          d3.select('#floorpricechartsvg').selectAll("*").remove();
+          d3.selectAll("rect").style("fill", "#FFCBED")
+          d3.select(this).style("fill", "#C6FEF2")
+          var nftname = d.NFT
+          console.log(nftname)
+          find_nft_contract_by_name(nftname)
         }
 
         // Bars
