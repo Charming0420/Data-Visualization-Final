@@ -73,12 +73,12 @@
             <div id="my_dataviz"></div>
         </div>
         <div class="whalse_detail">
-            <div class="bar" id="floorpricechart" style="margin-left: 30px;">
-                <div class="bar_title"><h1>Floor Price</h1></div>
+            <div class="bar" id="floorpricechart" style="margin-left: 10px;">
+                <div class="bar_title"><h2>Floor Price</h2></div>
                 <svg id="floorpricechartsvg" width="900" height="800"></svg>
             </div>
-            <div class="bar" style="margin-left: 30px;">
-                <div class="bar_title"><h1>Listing Count</h1></div>
+            <div class="bar" style="margin-left: 10px;">
+                <div class="bar_title"><h2>Listing Count</h2></div>
             </div>
         </div>
         
@@ -139,10 +139,10 @@
         svg.append("g")
             .attr("transform", `translate(0, ${height})`)
             .call(d3.axisBottom(x))
-            .selectAll("text")
-            .attr("transform", "translate(-10,0)rotate(-55)")
-            .style("text-anchor", "end")
-            .style("font", "10px times")
+        //     .selectAll("text")
+        //     .attr("transform", "translate(-10,0)rotate(-55)")
+        //     .style("text-anchor", "end")
+            .style("font", "0px times")
             .style("color", "white");
 
         // Add Y axis

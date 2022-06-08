@@ -230,7 +230,7 @@
         }
         // console.log(data);
         // set the dimensions and margins of the graph
-        const width = 700,height = 340;
+        const width = 500,height = 225;
 
         // append the svg object to the body of the page
         svg1 = d3.select("#floorpricechartsvg")
