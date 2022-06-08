@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>diaphragm</title>
+    <style>
+     svg{
+         position: absolute;
+        left: 15%;
+     }
+        h1{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<h1>折线图</h1>
+
+<svg width="1200" height="800"></svg>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript"></script>
+<script src="https://d3js.org/d3.v6.js" type="text/javascript"></script>
+<script>
+     coool(1)
+    function coool(){
+        svg = d3.select("svg");//获取节点svg
+        var g=svg.append("g").attr("transform","translate(40,50)");//在svg中添加一个g标签，并移动到（40，50）
+
+        //获取json
+        d3.json("diaphragm.json").then(function(data) {
+          console.log(data);
+                    createSvg(data);//调用函数，
+                }
+        );
+
+        /*
+        * 函数作用
+        * ①：创建x，y轴，规定x，y轴的值域和定义域，并画出来
+        * ②：创建折线并画出来
+        * ③：创建点并画出来
+        * */
+      function createSvg(data)
+      {
+          /*
+          * .extent函数是得到参数数组中的最大值和最小值，并以数组的形式返回
+          * */
+          var xscale=d3.scaleLinear().domain(d3.extent(data,function(d){return d.x})).range([0,900]);//定义x轴的定义域和值域
+
+          var xAixs=d3.axisBottom(xscale);//坐标轴的类型是底部
+          
+          g.append("g").attr("transform","translate(0,500)").call(xAixs);//这一步就是把你设置好的x轴信息显示出来
+          var yscale=d3.scaleLinear().domain([0,d3.max(data, function (d) {return d.y})]).range([500,0]);//定义y轴的定义域和值域
+          var yAixs=d3.axisLeft(yscale);//坐标轴的类型是底部
+          console.log(d3.extent(data,function(d){return d.x}));
+          g.append("g").attr("transform","translate(0,0)").call(yAixs);//这一步就是把你设置好的y轴信息显示出来
+
+          /*
+          * 使用构造器的x、y访问器函数告诉构造如何访问我们的数据：
+          * line.x([x_accessor])
+          * line.y([y_accessor])
+          * 构造器会将数据集中的每一个数据传入访问器函数，并使用其返回值作为 x坐标或y坐标：
+          * var line =d3.line().x(function(d){return d.year;}).y(function(d){return d.yield;});
+          * var d = line(data);
+          * */
+          var line=d3.line().x(function(d){return xscale(d.x)}).y(function(d){return yscale(d.y)}).curve(d3.curveLinear);
+          g.append("g").insert("path").attr("d",line(data)).attr("stroke","red").attr("stroke-width","1").attr("fill","none");//通过line得到数值，进行画线，其中画的是折线还是平滑的线是curve(）函数里面的参数决定的
+          g.selectAll("circle").data(data).enter().append("circle").attr("cx",function(d){return xscale(d.x)}).attr("cy",function(d){return yscale(d.y)}).attr("r","2").attr("fill","green");//得到点，并画出来
+
+      }
+
+    }
+</script>
+</body>
+</html>

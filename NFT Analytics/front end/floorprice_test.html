@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            svg{
+                position: absolute;
+               left: 15%;
+            }
+            h1{
+                text-align: center;
+            }
+        </style>
+    </head>
+    <script src="https://d3js.org/d3.v6.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-array@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-time@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-time-format@4"></script>
+    <script>
+    
+    const format = d3.timeFormat("%x");
+    
+    </script>
+    
+    <svg width="1200" height="800"></svg>
+    <script>
+    gethistoryfp("0x081FAC886FDcacdC826C4135ED4BA5b65ecEcFb8") //預設 到時候換掉
+
+    //----------------------------------------------------------------------------------------------//
+    //                                      找歷史價格Main function                                  //
+    //---------------------------------------------------------------------------------------------//
+    async function gethistoryfp(address)
+    {
+      var historyfp = await show_history_FP(address);
+      if(historyfp.error_code!=null)
+      {
+        console.log("No related trading data here!");
+      }
+      else
+      {
+        process_json(historyfp) //去做json前處理
+      }
+    }
+
+    //----------------------------------------------------------------------------------------------//
+    //透過find_nft_contract_by_name找到合約，傳到gethistoryfp，再傳來show_history_FP找過去30天Floor Price//
+    //---------------------------------------------------------------------------------------------//
+    function show_history_FP(address)
+    {
+      let from = "2022-03-06"
+      let currentDay = "2022-04-06"
+      var historyfpapi = "https://api.covalenthq.com/v1/1/nft_market/collection/"+address+"/?from="+from+"&to="+currentDay
+      return fetch(historyfpapi, {headers:{
+        Authorization: "Basic Y2tleV9hZWI0NGQ0YzAwNWU0NTFhOTg4NmVhYTk2OGY6IA=="
+      }})
+        .then(response => {return response.json()})
+        .catch((err) => console.error(err))
+    }
+
+
+
+
+    function process_json(historyfp)
+    {
+      console.log(historyfp);
+      priceXdata =[]
+      for(var i = 0; i < 31; i++)
+      {
+        var newdate = historyfp.data.items[i].opening_date
+        var newprice = historyfp.data.items[i].floor_price_quote_7d;
+        newdate=newdate.substr(5)
+        console.log(newdate);
+        add={day:newdate,floorprice:newprice}
+        priceXdata.push(add)
+      }
+      console.log(JSON.stringify(priceXdata));
+      d3.select(window).on("resize", drawdiagram(priceXdata));
+    }
+
+    async function drawdiagram(data)
+    {
+    console.log(data[0].day);
+    const parseTime = d3.timeParse('%m-%d')
+    for(var x = 0; x < 31; x++)
+    {
+        data[x].day = parseTime(data[x].day);
+    }
+
+    console.log(data);
+
+        // console.log(data);
+    // set the dimensions and margins of the graph
+    const margin = {top: 10, right: 100, bottom: 30, left: 30},
+        width = 700 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
+
+    // append the svg object to the body of the page
+     svg = d3.select("svg")
+     var g=svg.append("g").attr("transform","translate(40,50)");//在svg中添加一个g标签，并移动到（40，50）
+     
+    //  .attr("transform", `translate(${margin.left},${margin.top})`);
+    //  .attr("width", width + margin.left + margin.right)
+    //  .attr("height", height + margin.top + margin.bottom);
+
+    //Read the data
+    // const xData = data.map((i) => i.day);
+    // const yData = data.map((i) => i.floorprice);
+    
+        // Add X axis
+
+        const xScale = d3.scaleTime()
+                    .domain(d3.extent(data,function(d){return d.day}))
+                    .range([ 0, width ])
+
+        const xAxis = d3.axisBottom(xScale)
+                     .tickFormat(d3.timeFormat("%m/%d"))
+
+        g.append("g").attr("transform", `translate(0, ${height})`).call(xAxis);
+
+        // Add Y axis
+        const yScale = d3.scaleLinear()
+          .domain([0,d3.max(data,function(d){return d.floorprice})])
+          .range([ height, 0 ])
+
+        const yAxis = d3.axisLeft(yScale)
+
+        g.append("g").attr("transform","translate(0,0)") .call(yAxis);
+                     
+
+ 
+        var line=d3.line()
+        .x(function(d){return xScale(d.day)})
+        .y(function(d){return yScale(d.floorprice)}).curve(d3.curveLinear);
+          
+        g.append("g")
+        .insert("path")
+        .attr("d",line(data))
+        .attr("stroke","pink")
+        .attr("stroke-width","7")
+        .attr("fill","none")
+
+        
+        g.selectAll("circle")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("cx",function(d){return xScale(d.day)})
+        .attr("cy",function(d){return yScale(d.floorprice)})
+        .attr("r","2").attr("fill","black");                   
+    
+     }
+
+
+    </script>
+    <body>
+    </body>
+</html>
